@@ -1,0 +1,101 @@
+
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+
+    [SerializeField] float speed;
+    [SerializeField] float sensitivity;
+    [SerializeField] float sprintSpeed;
+
+    [SerializeField] float jumpForce;
+    [SerializeField] float gravity = 9.81f;
+    private float moveFB;
+    
+    private float moveLR;
+    private float rotX;
+    private float rotY;
+ 
+    private Vector3 jumpVelocity = Vector3.zero;
+    private Camera playerCam;
+    private CharacterController cc;
+
+
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        cc = GetComponent<CharacterController>();
+        playerCam = transform.Find("Camera").GetComponent<Camera>();
+    }
+
+    void Update()
+    {
+        
+        Move();
+    }
+
+    
+    private void Move()
+    {
+        
+        float movementSpeed = speed;
+
+        
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            
+            movementSpeed = sprintSpeed;
+        }
+        
+        else
+        {
+            
+            movementSpeed = speed;
+        }
+
+
+       
+        moveFB = Input.GetAxis("Vertical") * movementSpeed;
+        moveLR = Input.GetAxis("Horizontal") * movementSpeed;
+        rotX = Input.GetAxis("Mouse X") * sensitivity;
+        rotY -= Input.GetAxis("Mouse Y") * sensitivity;
+
+        
+        rotY = Mathf.Clamp(rotY, -60f, 60f);
+
+        Vector3 movement = new Vector3(moveLR, 0, moveFB).normalized * movementSpeed;
+
+        
+        if (cc.isGrounded)
+        {
+            
+            if (jumpVelocity.y < 0)
+            {
+                jumpVelocity.y = -2f; 
+            }
+
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                
+                jumpVelocity.y = jumpForce;
+            }
+        }
+
+        
+        if (!cc.isGrounded)
+        {
+            jumpVelocity.y -= gravity * Time.deltaTime;
+        }
+
+
+        
+        transform.Rotate(0, rotX, 0);
+
+        
+        playerCam.transform.localRotation = Quaternion.Euler(rotY, 0, 0);
+        movement = transform.rotation * movement;
+        cc.Move((movement + jumpVelocity) * Time.deltaTime);
+    }
+}
