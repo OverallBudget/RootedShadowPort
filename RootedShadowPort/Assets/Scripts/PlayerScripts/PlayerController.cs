@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private Camera playerCam;
     private CharacterController cc;
 
+    private float originalFOV;
+    public bool isMoving;
+
 
 
     void Start()
@@ -27,6 +30,8 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         cc = GetComponent<CharacterController>();
         playerCam = transform.Find("Camera").GetComponent<Camera>();
+        originalFOV = playerCam.fieldOfView; // Store the original FOV
+        isMoving = false;
     }
 
     void Update()
@@ -38,20 +43,23 @@ public class PlayerController : MonoBehaviour
     
     private void Move()
     {
-        
+       
         float movementSpeed = speed;
+        
 
         
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && isMoving)
         {
             
             movementSpeed = sprintSpeed;
+            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, originalFOV + 10f, Time.deltaTime * 4); // Increase FOV when sprinting
         }
         
         else
         {
             
             movementSpeed = speed;
+            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, originalFOV, Time.deltaTime * 4); // Reset FOV
         }
 
 
@@ -62,6 +70,19 @@ public class PlayerController : MonoBehaviour
         rotY -= Input.GetAxis("Mouse Y") * sensitivity;
 
         
+
+        if (moveFB == 0 && moveLR == 0)
+        {
+            isMoving = false;
+        }
+        else
+        {
+            isMoving = true;
+        }
+
+
+
+
         rotY = Mathf.Clamp(rotY, -60f, 60f);
 
         Vector3 movement = new Vector3(moveLR, 0, moveFB).normalized * movementSpeed;
