@@ -20,13 +20,5 @@ public class PathFinderBody : MonoBehaviour
 
     protected void Pathfinding()
     {
-        if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
-            return;
-
-        Vector3 target = navAgent.steeringTarget;
-        direction = (target - transform.position).normalized;
-        velocity = direction * navAgent.speed;
-
-        navAgent.Move(velocity * Time.deltaTime);
-    }
+            }
 }
