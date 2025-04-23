@@ -22,8 +22,6 @@ public class PlayerController : MonoBehaviour
     private float originalFOV;
     public bool isMoving;
 
-    // Reference to MenuScripts instance
-    private MenuScripts menuScripts;
 
     void Start()
     {
@@ -56,7 +54,7 @@ public class PlayerController : MonoBehaviour
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, originalFOV, Time.deltaTime * 4); // Reset FOV
         }
 
-        if (menuScripts != null && !menuScripts.isSettingsOpen)
+        if (!MenuScripts.isSettingsOpen)
         {
             moveFB = Input.GetAxis("Vertical") * movementSpeed;
             moveLR = Input.GetAxis("Horizontal") * movementSpeed;
