@@ -33,12 +33,7 @@ public class PlayerController : MonoBehaviour
         originalFOV = playerCam.fieldOfView; // Store the original FOV
         isMoving = false;
 
-        // Initialize MenuScripts reference
-        menuScripts = FindObjectOfType<MenuScripts>();
-        if (menuScripts == null)
-        {
-            Debug.LogError("MenuScripts instance not found in the scene.");
-        }
+        
     }
 
     void Update()
