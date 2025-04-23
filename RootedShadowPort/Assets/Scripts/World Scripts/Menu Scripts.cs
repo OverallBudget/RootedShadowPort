@@ -13,7 +13,7 @@ public class MenuScripts : MonoBehaviour
     public GameObject SoundMenu;
     public GameObject ControlsMenu;
 
-    public bool isSettingsOpen = false;
+    public static bool isSettingsOpen = false;
     public Slider volumeSlider; // Reference to the volume slider
     public AudioSource audioSource; // Reference to the audio source
 
