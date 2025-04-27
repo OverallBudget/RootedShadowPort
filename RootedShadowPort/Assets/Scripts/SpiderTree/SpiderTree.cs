@@ -3,28 +3,30 @@ using UnityEngine.AI;
 
 public class SpiderTree : PathFinderBody
 {
-    private enum States { PATROL, CHASE }
-    [SerializeField] private States state = States.PATROL;
+    private enum State { Patrol, Alerted }
+    [SerializeField] private State currentState = State.Patrol;
 
     [SerializeField] private Transform patrolPath;
     private Vector3[] patrolPoints;
     private int patrolIndex = 0;
 
-    [SerializeField] Transform player;
-    Vector3 lastPlayerPos;
-    float chaseUpdateThreshold = 1.0f;
+    [SerializeField] private Transform player;
+    private Vector3 alertTarget;
+    private bool hasAlertTarget = false;
     private Transform parent;
 
+    private float patrolResumeTimer = 0f;
+    private float alertCheckRadius = 30f;
+    [SerializeField] private GameObject gameOverUI;
     protected override void Awake()
     {
         base.Awake();
         parent = transform.parent;
     }
 
-    void Start()
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
 
         patrolPoints = new Vector3[patrolPath.childCount];
         for (int i = 0; i < patrolPath.childCount; i++)
@@ -32,75 +34,99 @@ public class SpiderTree : PathFinderBody
             patrolPoints[i] = parent.TransformPoint(patrolPath.GetChild(i).localPosition);
         }
         SetTargetLocation(patrolPoints[patrolIndex]);
-        Physics.IgnoreCollision(GetComponent<Collider>(), player.GetComponent<Collider>());
-
     }
-    private float patrolResumeTimer = 0f;
+
     private void Update()
     {
-        Debug.Log($"[SpiderTree] State: {state}, Position: {transform.position}, Target: {navAgent.destination}");
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        Debug.Log($"Distance to Player: {distanceToPlayer}");
-        switch (state)
+        //Debug.Log($"[SpiderTree] State: {currentState}, Position: {transform.position}, Target: {navAgent.destination}");
+
+        switch (currentState)
         {
-            case States.PATROL:
-                if (distanceToPlayer < 50f)
-                {
-                    state = States.CHASE;
-                    SetTargetLocation(player.position);
-                }
-                else {
-                    if (patrolResumeTimer > 0)
-                    {
-                        patrolResumeTimer -= Time.deltaTime;
-                    }
-                    else
-                    {
-                        PathFollow();
-                    }
-                }
+            case State.Patrol:
+                PatrolBehavior();
                 break;
 
-            case States.CHASE:
-                 float distFromLast = Vector3.Distance(player.position, lastPlayerPos);
-                if (distanceToPlayer < 30f)
-                {
-                    if (distFromLast > chaseUpdateThreshold)
-                    {
-                        lastPlayerPos = player.position;
-                        SetTargetLocation(player.position);
-                    }
-                }
-                else
-                {
-                    state = States.PATROL;
-                     navAgent.ResetPath();
-                    patrolIndex = 0;
-                    SetTargetLocation(patrolPoints[patrolIndex]);
-                    patrolResumeTimer = 0.5f;
-                }
+            case State.Alerted:
+                AlertedBehavior();
                 break;
         }
     }
 
-    private void PathFollow()
-    { 
+    private void PatrolBehavior()
+    {
+        if (patrolResumeTimer > 0)
+        {
+            patrolResumeTimer -= Time.deltaTime;
+            return;
+        }
+
+        if (hasAlertTarget)
+        {
+            currentState = State.Alerted;
+            SetTargetLocation(alertTarget);
+            hasAlertTarget = false;
+            return;
+        }
+
         if (!navAgent.pathPending && HasReachedDestination())
         {
             patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
             SetTargetLocation(patrolPoints[patrolIndex]);
         }
+    }
 
+    private void AlertedBehavior()
+    {
+        if (!navAgent.pathPending && HasReachedDestination())
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            if (distanceToPlayer < alertCheckRadius)
+            {
+                SetTargetLocation(player.position);
+            }
+            else
+            {
+                ReturnToPatrol();
+            }
+        }
+    }
+
+    private void ReturnToPatrol()
+    {
+        currentState = State.Patrol;
+        patrolIndex = 0;
+        SetTargetLocation(patrolPoints[patrolIndex]);
+        patrolResumeTimer = 0.5f;
     }
 
     private bool HasReachedDestination(float threshold = 0.3f)
     {
         Vector3 pos = transform.position;
         Vector3 dest = navAgent.destination;
-
         pos.y = dest.y = 0;
-
         return Vector3.Distance(pos, dest) <= threshold;
     }
-}
 
+    public void AlertTo(Vector3 position)
+    {
+
+            Debug.Log($"[SpiderTree] Alerted to: {position}");
+            alertTarget = position;
+            hasAlertTarget = true;
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("[SpiderTree] Player collided! Game Over!");
+            Gameover();
+        }
+    }
+    private void Gameover()
+    {
+        gameOverUI.SetActive(true);
+    }
+}
