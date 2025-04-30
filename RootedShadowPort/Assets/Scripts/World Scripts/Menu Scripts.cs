@@ -1,5 +1,7 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MenuScripts : MonoBehaviour
@@ -44,6 +46,10 @@ public class MenuScripts : MonoBehaviour
         OpenSettings();
         Volume();
         Sensitivity();
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Mouse Button Down");
+        }
         
     }
 
@@ -121,6 +127,7 @@ public class MenuScripts : MonoBehaviour
         displayMenu.SetActive(false);
         SoundMenu.SetActive(true);
         ControlsMenu.SetActive(false);
+        Debug.Log("Sound Menu Opened");
     }
 
     public void OpenControlsMenu()
