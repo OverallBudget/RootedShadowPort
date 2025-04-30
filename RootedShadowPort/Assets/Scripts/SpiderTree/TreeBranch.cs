@@ -9,7 +9,6 @@ public class TreeBranch : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log($"[TreeBranch] Triggered by: {other.name}");
             spiderTree.AlertTo(transform.position);
         }
     }

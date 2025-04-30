@@ -110,8 +110,6 @@ public class SpiderTree : PathFinderBody
 
     public void AlertTo(Vector3 position)
     {
-
-            Debug.Log($"[SpiderTree] Alerted to: {position}");
             alertTarget = position;
             hasAlertTarget = true;
         
@@ -121,7 +119,6 @@ public class SpiderTree : PathFinderBody
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("[SpiderTree] Player collided! Game Over!");
             Gameover();
         }
     }
