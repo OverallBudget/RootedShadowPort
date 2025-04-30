@@ -46,10 +46,7 @@ public class MenuScripts : MonoBehaviour
         OpenSettings();
         Volume();
         Sensitivity();
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Mouse Button Down");
-        }
+        
         
     }
 
@@ -158,8 +155,9 @@ public class MenuScripts : MonoBehaviour
 
     public void FullScreenToggle()
     {
+        Debug.Log("Before Toggle: " + Screen.fullScreen);
         Screen.fullScreen = !Screen.fullScreen;
-        Debug.Log("FullScreen: " + Screen.fullScreen);
+        Debug.Log("After Toggle: " + Screen.fullScreen);
     }
 
     public void Resume()
