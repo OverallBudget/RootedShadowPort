@@ -242,7 +242,6 @@ MonoBehaviour:
   displayMenu: {fileID: 897299028}
   SoundMenu: {fileID: 2080236688}
   ControlsMenu: {fileID: 729796332}
-  isSettingsOpen: 0
   volumeSlider: {fileID: 1667226738}
   audioSource: {fileID: 743801748}
   sensitivitySlider: {fileID: 1364616724}
@@ -1775,7 +1774,6 @@ MonoBehaviour:
   displayMenu: {fileID: 897299028}
   SoundMenu: {fileID: 2080236688}
   ControlsMenu: {fileID: 729796332}
-  isSettingsOpen: 0
   volumeSlider: {fileID: 1667226738}
   audioSource: {fileID: 743801748}
   sensitivitySlider: {fileID: 1364616724}

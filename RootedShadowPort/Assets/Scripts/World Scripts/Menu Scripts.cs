@@ -1,5 +1,7 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MenuScripts : MonoBehaviour
@@ -44,6 +46,7 @@ public class MenuScripts : MonoBehaviour
         OpenSettings();
         Volume();
         Sensitivity();
+        
         
     }
 
@@ -106,10 +109,11 @@ public class MenuScripts : MonoBehaviour
         displayMenu.SetActive(true);
         SoundMenu.SetActive(false);
         ControlsMenu.SetActive(false);
-        
+        Debug.Log("Display Menu Opened");
 
 
-        
+
+
     }
 
     public void OpenSoundMenu()
@@ -120,6 +124,7 @@ public class MenuScripts : MonoBehaviour
         displayMenu.SetActive(false);
         SoundMenu.SetActive(true);
         ControlsMenu.SetActive(false);
+        Debug.Log("Sound Menu Opened");
     }
 
     public void OpenControlsMenu()
@@ -134,7 +139,11 @@ public class MenuScripts : MonoBehaviour
 
     public void Volume()
     {
-        audioSource.volume = volumeSlider.value;
+        if(audioSource != null)
+        {
+            audioSource.volume = volumeSlider.value;
+        }
+        
       
     }
 
@@ -146,8 +155,9 @@ public class MenuScripts : MonoBehaviour
 
     public void FullScreenToggle()
     {
+        Debug.Log("Before Toggle: " + Screen.fullScreen);
         Screen.fullScreen = !Screen.fullScreen;
-        Debug.Log("FullScreen: " + Screen.fullScreen);
+        Debug.Log("After Toggle: " + Screen.fullScreen);
     }
 
     public void Resume()
