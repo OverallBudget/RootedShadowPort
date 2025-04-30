@@ -106,10 +106,11 @@ public class MenuScripts : MonoBehaviour
         displayMenu.SetActive(true);
         SoundMenu.SetActive(false);
         ControlsMenu.SetActive(false);
-        
+        Debug.Log("Display Menu Opened");
 
 
-        
+
+
     }
 
     public void OpenSoundMenu()
@@ -134,7 +135,11 @@ public class MenuScripts : MonoBehaviour
 
     public void Volume()
     {
-        audioSource.volume = volumeSlider.value;
+        if(audioSource != null)
+        {
+            audioSource.volume = volumeSlider.value;
+        }
+        
       
     }
 
