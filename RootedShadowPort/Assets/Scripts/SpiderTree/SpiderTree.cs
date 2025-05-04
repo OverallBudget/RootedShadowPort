@@ -38,8 +38,6 @@ public class SpiderTree : PathFinderBody
 
     private void Update()
     {
-        //Debug.Log($"[SpiderTree] State: {currentState}, Position: {transform.position}, Target: {navAgent.destination}");
-
         switch (currentState)
         {
             case State.Patrol:
@@ -119,6 +117,8 @@ public class SpiderTree : PathFinderBody
     {
         if (other.CompareTag("Player"))
         {
+            NavMeshAgent agent = this.GetComponent<NavMeshAgent>();
+            agent.speed = 0;
             Gameover();
         }
     }
