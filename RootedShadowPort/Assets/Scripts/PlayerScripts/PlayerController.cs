@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     private float originalFOV;
     public bool isMoving;
-
+    public LayerMask mask;
 
     void Start()
     {
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+        Looking();
     }
 
     private void Move()
@@ -106,5 +107,19 @@ public class PlayerController : MonoBehaviour
         playerCam.transform.localRotation = Quaternion.Euler(rotY, 0, 0);
         movement = transform.rotation * movement;
         cc.Move((movement + jumpVelocity) * Time.deltaTime);
+    }
+
+    private void Looking()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 100f, mask))
+        {
+            var obj = hit.collider.gameObject;
+
+            if (obj.CompareTag("Car"))
+            {
+                obj.GetComponent<Car>().CloseSetter();
+            }
+        }
     }
 }
