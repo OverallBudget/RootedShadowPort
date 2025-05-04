@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         originalFOV = playerCam.fieldOfView; // Store the original FOV
         isMoving = false;
 
-        
+
     }
 
     void Update()
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
             rotY = 0;
         }
 
-        
+
 
         if (moveFB == 0 && moveLR == 0)
         {

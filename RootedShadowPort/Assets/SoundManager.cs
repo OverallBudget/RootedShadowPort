@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class SoundManager : MonoBehaviour
             // 1) wait here until the player starts moving
             yield return new WaitUntil(() => ctrl.isMoving);
 
-            // 2) as soon as we�re moving, cycle through the clips�
+            // 2) as soon as we’re moving, cycle through the clips…
             if (dirtSteps != null)
             {
                 for (int i = 0; i < dirtSteps.Count; i++)
@@ -72,16 +72,16 @@ public class SoundManager : MonoBehaviour
         var player = GameObject.FindGameObjectWithTag("Player");
         var ctrl = player.GetComponent<PlayerController>();
         float delay = 0.5f;
-        while (true)
+        while (true)                   
         {
-
+            
             yield return new WaitUntil(() => ctrl.isMoving);
-
+            
             if (woodSteps != null)
             {
                 for (int i = 0; i < woodSteps.Count; i++)
                 {
-
+                    
                     if (!ctrl.isMoving)
                         break;
                     AudioSource.PlayClipAtPoint(woodSteps[i], player.transform.position);
@@ -89,7 +89,7 @@ public class SoundManager : MonoBehaviour
                     yield return new WaitForSeconds(delay);
                 }
             }
-
+            
         }
     }
 
