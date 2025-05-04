@@ -5,7 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Spooky Tree
+<<<<<<< Updated upstream
   - Car
+=======
+  - Dirt
+  - Wood
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
