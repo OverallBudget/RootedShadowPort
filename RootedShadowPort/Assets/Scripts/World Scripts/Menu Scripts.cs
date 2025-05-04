@@ -166,6 +166,9 @@ public class MenuScripts : MonoBehaviour
         background.SetActive(false);
         settingsMenu.gameObject.SetActive(false);
         isSettingsOpen = false;
+        display = false;
+        sound = false;
+        controls = false;
     }
     public void QuitGame()
     {
