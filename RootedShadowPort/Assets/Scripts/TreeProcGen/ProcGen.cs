@@ -30,5 +30,17 @@ public class ProcGen : MonoBehaviour
             }
         }
     }
+
+    [ContextMenu("PlaceBoundryTrees")]
+    void PlaceBoundryTrees()
+    {
+        for(int i = 0; i < 200; i++)
+        {
+            GameObject newTree = (GameObject)PrefabUtility.InstantiatePrefab(Tree);
+            Vector3 temp = new Vector3(i*1.2f, 0,transform.position.z);
+            newTree.transform.position = temp;
+            newTree.transform.SetParent(Parent.transform);
+        }
+    }
     // Remember to go to Tree Manager, right click on Proc Gen Component and Place Tree
 }
