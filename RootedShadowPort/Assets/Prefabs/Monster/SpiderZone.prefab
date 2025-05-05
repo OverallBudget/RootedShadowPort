@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1807860569231767855}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.39, y: 9.319, z: -7.5}
+  m_LocalPosition: {x: 17.59, y: 9.319, z: -31.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -88,8 +88,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6119944174800856675}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7552807, y: -9.075532, z: 5.85681}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -102.6181, y: 0, z: -131.67513}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spiderTree: {fileID: 2624222913861681385}
+  branchSound: {fileID: 8300000, guid: 0ca03176aa2fbfd4ab3c1b1572d11961, type: 3}
 --- !u!54 &5388344413554619227
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -275,7 +276,7 @@ Transform:
   m_GameObject: {fileID: 7825073125202216433}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.78, y: 9.28, z: -7.24}
+  m_LocalPosition: {x: 2.16, y: 9.28, z: 5.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -298,7 +299,7 @@ GameObject:
   - component: {fileID: 2624222913861681385}
   m_Layer: 0
   m_Name: SpiderForNow
-  m_TagString: Untagged
+  m_TagString: Spooky Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 8311635086017898212}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4663644, y: 9.565533, z: -4.4568105}
+  m_LocalPosition: {x: 3.4663644, y: 9.461, z: 0.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -437,7 +438,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -457,3 +458,4 @@ MonoBehaviour:
   patrolPath: {fileID: 7502890451599783743}
   player: {fileID: 0}
   gameOverUI: {fileID: 0}
+  walkingClip: {fileID: 8300000, guid: dcf0b461791aa5c43a38b86df4b0f703, type: 3}

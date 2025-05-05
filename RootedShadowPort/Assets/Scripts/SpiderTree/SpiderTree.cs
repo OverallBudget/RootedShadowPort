@@ -18,10 +18,23 @@ public class SpiderTree : PathFinderBody
     private float patrolResumeTimer = 0f;
     private float alertCheckRadius = 30f;
     [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private AudioClip walkingClip;
+    private AudioSource audioSource;
     protected override void Awake()
     {
         base.Awake();
         parent = transform.parent;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        audioSource.clip = walkingClip;
+        audioSource.loop = true;
+        audioSource.spatialBlend = 1f;
+        audioSource.minDistance = 1f;
+        audioSource.maxDistance = 25f;
+        audioSource.playOnAwake = false;
     }
 
     private void Start()
@@ -47,6 +60,24 @@ public class SpiderTree : PathFinderBody
             case State.Alerted:
                 AlertedBehavior();
                 break;
+        }
+        WalkingSound();
+    }
+    private void WalkingSound()
+    {
+        if (this.navAgent.velocity.magnitude > 0.1f)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Pause();
+            }
         }
     }
 

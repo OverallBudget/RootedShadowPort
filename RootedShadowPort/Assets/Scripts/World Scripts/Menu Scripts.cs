@@ -18,6 +18,7 @@ public class MenuScripts : MonoBehaviour
     public static bool isSettingsOpen = false;
     public Slider volumeSlider; // Reference to the volume slider
     public AudioSource audioSource; // Reference to the audio source
+    public AudioSource[] MonsterAudioSource; // Reference to the monster audio source
 
     public Slider sensitivitySlider; // Reference to the sensitivity slider
     public SpriteSwap fullScreenToggle; // Reference to the full screen toggle script
@@ -38,6 +39,12 @@ public class MenuScripts : MonoBehaviour
         sound = false;
         controls = false;
         display = false;
+        SpiderTree[] monsters = FindObjectsOfType<SpiderTree>();
+        MonsterAudioSource = new AudioSource[monsters.Length];
+        for (int i = 0; i < monsters.Length; i++)
+        {
+            MonsterAudioSource[i] = monsters[i].GetComponent<AudioSource>();
+        }
     }
 
     // Update is called once per frame
@@ -142,6 +149,10 @@ public class MenuScripts : MonoBehaviour
         if(audioSource != null)
         {
             audioSource.volume = volumeSlider.value;
+            foreach(AudioSource audio in MonsterAudioSource)
+            {
+                audio.volume = volumeSlider.value;
+            }
         }
         
       
