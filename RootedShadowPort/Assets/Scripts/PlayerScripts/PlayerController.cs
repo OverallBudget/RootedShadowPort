@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -112,10 +113,12 @@ public class PlayerController : MonoBehaviour
     private void Looking()
     {
         RaycastHit hit;
+        Debug.DrawRay(transform.position, transform.forward * 100f, Color.green, 2f);
         if (Physics.Raycast(transform.position, transform.forward, out hit, 100f, mask))
         {
             var obj = hit.collider.gameObject;
 
+            Debug.Log(obj);
             if (obj.CompareTag("Car"))
             {
                 obj.GetComponent<Car>().CloseSetter();

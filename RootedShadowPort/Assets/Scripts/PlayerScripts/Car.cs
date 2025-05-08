@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class Car : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI getAwayText;
-    [SerializeField] Canvas winScreen;
+    [SerializeField] GameObject getAwayText;
     [SerializeField] GameObject player;
+    [SerializeField] GameObject win;
+    [SerializeField] GameObject winScreen;
 
     bool isClose;
-    bool hasWon;
+    bool hasWon = false;
     // Update is called once per frame
     void Update()
     {
@@ -18,20 +19,22 @@ public class Car : MonoBehaviour
 
     public void CloseSetter()
     {
+        win.SetActive(true);
+        Debug.Log("Close Setting");
         // prevent player from seeing the prompt to get away if already won
         if (hasWon)
         {
             return;
         }
-        
+
         if (Vector3.Distance(player.transform.position, transform.position) < 5f)
         {
-            getAwayText.gameObject.SetActive(true);
+            getAwayText.SetActive(true);
             isClose = true;
         }
         else
         {
-            getAwayText.gameObject.SetActive(false);
+            getAwayText.SetActive(false);
             isClose = false;
         }
     }
@@ -42,7 +45,8 @@ public class Car : MonoBehaviour
         {
             isClose = false;
             hasWon = true;
-            winScreen.gameObject.SetActive(true);
+            winScreen.SetActive(true);
+            getAwayText.SetActive(false);
         }
     }
 }
