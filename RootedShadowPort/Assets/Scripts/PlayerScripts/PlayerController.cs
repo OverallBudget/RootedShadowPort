@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, originalFOV, Time.deltaTime * 4); // Reset FOV
         }
 
-        if (!MenuScripts.isSettingsOpen)
+        if (!MenuScripts.isSettingsOpen && !SpiderTree.isDead)
         {
             moveFB = Input.GetAxis("Vertical") * movementSpeed;
             moveLR = Input.GetAxis("Horizontal") * movementSpeed;

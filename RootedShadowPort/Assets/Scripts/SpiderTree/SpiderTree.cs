@@ -20,6 +20,7 @@ public class SpiderTree : PathFinderBody
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private AudioClip walkingClip;
     private AudioSource audioSource;
+    public static bool isDead = false;
     protected override void Awake()
     {
         base.Awake();
@@ -151,6 +152,7 @@ public class SpiderTree : PathFinderBody
             NavMeshAgent agent = this.GetComponent<NavMeshAgent>();
             agent.speed = 0;
             Gameover();
+            isDead = true;
         }
     }
     private void Gameover()
