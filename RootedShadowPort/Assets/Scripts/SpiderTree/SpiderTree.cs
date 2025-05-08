@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class SpiderTree : PathFinderBody
 {
@@ -21,6 +22,7 @@ public class SpiderTree : PathFinderBody
     [SerializeField] private AudioClip walkingClip;
     private AudioSource audioSource;
     public static bool isDead = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -36,6 +38,7 @@ public class SpiderTree : PathFinderBody
         audioSource.minDistance = 1f;
         audioSource.maxDistance = 25f;
         audioSource.playOnAwake = false;
+        isDead = false;
     }
 
     private void Start()
@@ -158,5 +161,6 @@ public class SpiderTree : PathFinderBody
     private void Gameover()
     {
         gameOverUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 }

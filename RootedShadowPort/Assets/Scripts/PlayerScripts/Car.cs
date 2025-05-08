@@ -10,7 +10,7 @@ public class Car : MonoBehaviour
     [SerializeField] GameObject winScreen;
 
     bool isClose;
-    bool hasWon = false;
+    public static bool hasWon = false;
     // Update is called once per frame
     void Update()
     {
@@ -47,6 +47,7 @@ public class Car : MonoBehaviour
             hasWon = true;
             winScreen.SetActive(true);
             getAwayText.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

@@ -29,7 +29,10 @@ public class MenuScripts : MonoBehaviour
     public TextMeshProUGUI controlsButton; // Reference to the controls button
 
 
-
+    private void Awake()
+    {
+        isSettingsOpen = false;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -59,6 +62,16 @@ public class MenuScripts : MonoBehaviour
 
     public void OpenSettings()
     {
+        if (SpiderTree.isDead)
+        {
+            return;
+        }
+
+        if (Car.hasWon)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape) && !isSettingsOpen)
         {
             Cursor.lockState = CursorLockMode.None;
